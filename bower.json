@@ -1,0 +1,28 @@
+{
+  "name": "Angular Boilerplate",
+  "version": "0.0.1",
+  "authors": [
+    "kdchang <kd.chang@deltaww.com>"
+  ],
+  "description": "Description goes here",
+  "main": "app/app.js",
+  "keywords": [
+    "angularjs"
+  ],
+  "license": "MIT",
+  "homepage": "http://10.120.136.55/ironman/angular-boilerplate",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.5",
+    "bootstrap": "~3.3.6",
+    "angular-route": "~1.5.5",
+    "angular-material": "^1.1.3"
+  }
+}
