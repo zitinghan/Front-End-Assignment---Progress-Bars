@@ -1,22 +1,37 @@
-.prograssBar {
-  background-color: grey;
+#mainWrapper{
+  margin: 20px;
 
-  .progress {
-    width: 1%;
-    height: 30px;
-    background-color: green;
-  }
-
-  
 }
 
-.progressText {
+#controllerBar{
+}
+
+.progressWrapper{
+  width:300px;
+  margin:20px 0;
+
+  .progressBarTitle{
+    text-align:center;
+  }
+
+  .prograssBar {
+    background-color: grey;
+
+    .progress {
+      width: 1%;
+      height: 30px;
+      background-color: green;
+    }
+   
+  }
+
+  .progressText {
     position: relative;
     display: block;
     color:#fff;
     margin-top:-45px;
     text-align:center;
-
   }
+}
 
 

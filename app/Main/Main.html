@@ -4,11 +4,34 @@ Element: <isolate-scope-with-controller datasource="customers" add="addCustomer(
          </isolate-scope-with-controller> -->
 
 <div id="mainWrapper">
-  <div style="width:50%">
-    <div class="prograssBar">
-      <div class="progress"></div>
-    </div>
-    <div class="progressText">123</div>
+  <h1>Progress Bars Demo</h1>
+  <loading-bar 
+    ng-repeat='bar in endPoint.bars track by $index'
+    currentstate='bar'
+    limit='endPoint.limit'
+    progress-index='$index'
+  >
+  </loading-bar>
+  
+  <div id="controllerBar">
+    
+    <select 
+      ng-model='progressBarSelected' 
+      ng-init="progressBarSelected='0'"
+    >
+      <option 
+        ng-repeat='option in endPoint.bars track by $index'
+        value='{{$index}}'
+      >
+        Progress {{$index+1}}
+      </option>
+    </select>
+    <button 
+      ng-repeat='btn in endPoint.buttons | orderBy:"endPoint.buttons"'
+      ng-click='controller.changeProgress(btn)'
+    >
+      {{btn}}
+    </button>
   </div>
   
 </div>
