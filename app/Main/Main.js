@@ -26,10 +26,8 @@ app.controller('MainCtrl', ['$scope', function($scope){
   // Control bar action
   $scope.controller = {
     changeProgress: function(value){
-      
       var barSelected = $scope.progressBarSelected;
       var currentBarsProgress = $scope.endPoint.bars[barSelected];
-
       var afterClickValue = currentBarsProgress+value;
       if(afterClickValue < 0){ // make sure no negative
         $scope.endPoint.bars[barSelected] = 0;
@@ -40,9 +38,6 @@ app.controller('MainCtrl', ['$scope', function($scope){
     }
   }
 
-  
-
-
 }]);
 
 //Progress bar directive
@@ -51,29 +46,26 @@ app.directive('loadingBar', function () {
   function link(scope, element, attrs){
     scope.progress = {
       state: convertPercentageFromLimit(scope.currentstate),
-      convertPercentageFromLimit: function(progress){ //change depends on limit to 100%
-        var limit = scope.limit;
-        var eachPercentage = limit/100;
-        return Math.round(progress/eachPercentage); 
-      }
+      convertPercentageFromLimit: convertPercentageFromLimit,
     }
 
     scope.$watch('currentstate', function(newVal, oldVal){
       if(newVal!=oldVal){
-        animationMove(scope.progressIndex, scope.progress.convertPercentageFromLimit(oldVal), scope.progress.convertPercentageFromLimit(newVal))
+        animationMove(scope.progressIndex, convertPercentageFromLimit(oldVal), convertPercentageFromLimit(newVal))
       }
     });
 
-    function convertPercentageFromLimit(progress){
+    function convertPercentageFromLimit(progress){ //change depends on limit to 100%
       var limit = scope.limit;
       var eachPercentage = limit/100;
-      return Math.round(progress/eachPercentage); 
+      var roundPercentage = Math.round(progress/eachPercentage);
+      return roundPercentage
     }
 
     function animationMove(progressBarID, fromValue, toValue) {
       var element = document.getElementById("progress_"+progressBarID).getElementsByClassName("progressBackground");   
       var state = fromValue;
-      var interval = setInterval(move, 10);
+      var interval = setInterval(move, 20);
       
       function move() {
         if (state == toValue) {
@@ -81,19 +73,21 @@ app.directive('loadingBar', function () {
         }else if(toValue > fromValue) {
           state++; 
           scope.progress.state++;
+          scope.$apply();
           element[0].style.width = state + '%'; 
         }else if(toValue < fromValue){
           state--; 
           scope.progress.state--;
-          element[0].style.width = state + '%'; 
+          scope.$apply();
+          if(state <= 100){
+            element[0].style.width = state + '%';
+          }
         }
       }
     }
 
   }
 
-  
-      
   return {
       restrict: 'EA', 
       scope: {

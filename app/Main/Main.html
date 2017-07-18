@@ -28,8 +28,9 @@ Element: <isolate-scope-with-controller datasource="customers" add="addCustomer(
       </option>
     </select>
     <button 
-      ng-repeat='btn in endPoint.buttons | orderBy:"endPoint.buttons"'
+      ng-repeat='btn in endPoint.buttons'
       ng-click='controller.changeProgress(btn)'
+      class="btn"
     >
       {{btn}}
     </button>

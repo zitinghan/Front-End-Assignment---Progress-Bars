@@ -6,11 +6,11 @@
   <div class="prograssBar">
     <div class="progressBackground" 
         style="width: {{progress.state}}%"
-        ng-class='{"redBar": progress.convertPercentageFromLimit(currentstate)>100}'
+        ng-class='{"redBar": progress.convertPercentageFromLimit(currentstate)>=100}'
     >
     </div>
   </div>
   <div class="progressText">
-    {{progress.convertPercentageFromLimit(currentstate)}}%
+    {{progress.state}}%
   </div>
 </div>
