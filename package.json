@@ -29,12 +29,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://10.120.136.55/ironman/angular-boilerplate"
+    "url": ""
   },
   "keywords": [
     "angular",
     "boilerplate"
   ],
-  "author": "kdchang",
+  "author": "ziting",
   "license": "MIT"
 }

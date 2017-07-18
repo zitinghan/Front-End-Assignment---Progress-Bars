@@ -9,13 +9,16 @@ app.controller('MainCtrl', ['$scope', function($scope){
     "buttons": [ // control button, edit here to add, remove or change control
         10,
         38,
+        70,
         -13,
         -18
+        -50
     ],
     "bars": [ //total progress bar, add, remove progress bar or change init progress
         62,
         45,
-        62
+        50,
+        200
     ],
     "limit": 230 //limit to reach 100%
   };
@@ -26,46 +29,79 @@ app.controller('MainCtrl', ['$scope', function($scope){
       
       var barSelected = $scope.progressBarSelected;
       var currentBarsProgress = $scope.endPoint.bars[barSelected];
-      console.log(barSelected,currentBarsProgress, value);
-      $scope.endPoint.bars[barSelected] = currentBarsProgress+value;
+
+      var afterClickValue = currentBarsProgress+value;
+      if(afterClickValue < 0){ // make sure no negative
+        $scope.endPoint.bars[barSelected] = 0;
+      }else{
+        $scope.endPoint.bars[barSelected] = currentBarsProgress+value;
+      }
+      
     }
   }
+
+  
+
 
 }]);
 
 //Progress bar directive
 app.directive('loadingBar', function () {
       
-    var controller = ['$scope', function ($scope) {
-      console.log($scope);
-      $scope.progress = {
-
+  function link(scope, element, attrs){
+    scope.progress = {
+      state: convertPercentageFromLimit(scope.currentstate),
+      convertPercentageFromLimit: function(progress){ //change depends on limit to 100%
+        var limit = scope.limit;
+        var eachPercentage = limit/100;
+        return Math.round(progress/eachPercentage); 
       }
+    }
 
-      function convertPercentageFromLimit(){
-        var limit = $scope.limit;
-
+    scope.$watch('currentstate', function(newVal, oldVal){
+      if(newVal!=oldVal){
+        animationMove(scope.progressIndex, scope.progress.convertPercentageFromLimit(oldVal), scope.progress.convertPercentageFromLimit(newVal))
       }
-          /*function init() {
-              $log.debug('init');
-          }
+    });
 
-          init();
+    function convertPercentageFromLimit(progress){
+      var limit = scope.limit;
+      var eachPercentage = limit/100;
+      return Math.round(progress/eachPercentage); 
+    }
 
-          $scope.addItem = function () {
-            $log.debug('addItem', globalVar.getIPAddress());
-          };*/
-    }]
-        
+    function animationMove(progressBarID, fromValue, toValue) {
+      var element = document.getElementById("progress_"+progressBarID).getElementsByClassName("progressBackground");   
+      var state = fromValue;
+      var interval = setInterval(move, 10);
       
-    return {
-        restrict: 'EA', 
-        scope: {
-          currentstate: '=',
-          limit: '=',
-          progressIndex: '='
-        },
-        controller: controller,
-        templateUrl: 'app/Main/progressTemplate.html'
-    };
+      function move() {
+        if (state == toValue) {
+          clearInterval(interval);
+        }else if(toValue > fromValue) {
+          state++; 
+          scope.progress.state++;
+          element[0].style.width = state + '%'; 
+        }else if(toValue < fromValue){
+          state--; 
+          scope.progress.state--;
+          element[0].style.width = state + '%'; 
+        }
+      }
+    }
+
+  }
+
+  
+      
+  return {
+      restrict: 'EA', 
+      scope: {
+        currentstate: '=',
+        limit: '=',
+        progressIndex: '='
+      },
+      templateUrl: 'app/Main/progressTemplate.html',
+      link: link
+  };
 });

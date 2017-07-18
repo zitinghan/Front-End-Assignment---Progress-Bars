@@ -1,10 +1,16 @@
 <div class="progressWrapper">
-  <div class="progressBarTitle">Progress {{progressIndex+1}}</div>
+  <h4 class="progressBarTitle">
+    Progress {{progressIndex+1}}  
+    <small>Value: {{currentstate}}</small>
+  </h4>
   <div class="prograssBar">
-    <div class="progress" 
-        style="width: {{currentstate}}%"
+    <div class="progressBackground" 
+        style="width: {{progress.state}}%"
+        ng-class='{"redBar": progress.convertPercentageFromLimit(currentstate)>100}'
     >
     </div>
   </div>
-  <div class="progressText">{{currentstate}}%</div>
+  <div class="progressText">
+    {{progress.convertPercentageFromLimit(currentstate)}}%
+  </div>
 </div>

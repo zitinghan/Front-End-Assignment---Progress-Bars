@@ -15,12 +15,19 @@
   }
 
   .prograssBar {
-    background-color: grey;
+    background-color: #dddddd;
+    border-radius:25px;
 
-    .progress {
-      width: 1%;
-      height: 30px;
-      background-color: green;
+    .progressBackground {
+      height: 20px;
+      background-color: #5cb85c;
+      border-radius:25px;
+    }
+
+    .redBar{
+      background-color: red!important;
+      overflow: hidden;
+      max-width:100%!important
     }
    
   }
@@ -29,7 +36,7 @@
     position: relative;
     display: block;
     color:#fff;
-    margin-top:-45px;
+    margin-top:-20px;
     text-align:center;
   }
 }

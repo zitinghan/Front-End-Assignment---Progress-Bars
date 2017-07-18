@@ -3,7 +3,6 @@
 
 var app = angular.module('app', [
     'ngRoute',
-    'app.globalVar',
     'app.Main',
 ])
 .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
